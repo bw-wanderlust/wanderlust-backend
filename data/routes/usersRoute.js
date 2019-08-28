@@ -10,7 +10,7 @@ const register = (req, res) => {
   const creds = req.body;
   const hash = bcrypt.hashSync(creds.password, 12);
   creds.password = hash;
-  if (creds.username && creds.password && creds.department) {
+  if (creds.username && creds.password && creds.firstName && creds.lastName) {
     helper
       .addUser(creds)
       .then(ids => {
@@ -30,7 +30,9 @@ const register = (req, res) => {
         res.status(500).json({ message: "Failed to resister user" });
       });
   } else {
-    res.status(404).json({ message: "Missing username/password/department" });
+    res
+      .status(404)
+      .json({ message: "Missing username/password/(first/last)name" });
   }
 };
 
