@@ -12,7 +12,7 @@ exports.up = function(knex) {
     table.string("cost");
     table.boolean("isFree").defaultTo(false);
     table.date("startDate").notNullable();
-    table.date("endDate").notNollable();
+    table.date("endDate").notNullable();
   });
 };
 
