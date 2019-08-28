@@ -1,126 +1,65 @@
 const express = require("express");
 const router = express.Router();
 
-const helper = require("../helpers/userDB");
-const bcrypt = require("bcrypt");
+const helper = require("../helpers/tripsDB");
 
 const { authenticate, generateToken } = require("../middleware/authMiddleware");
 
-const register = (req, res) => {
-  const creds = req.body;
-  const hash = bcrypt.hashSync(creds.password, 12);
-  creds.password = hash;
-  if (creds.username && creds.password && creds.department) {
-    helper
-      .addUser(creds)
-      .then(ids => {
-        const id = ids[0];
-        userDb
-          .getUser(id)
-          .then(user => {
-            const token = generateToken(user);
-            res.status(201).json({ token });
-          })
-          .catch(err => {
-            res.status(500).json("Failed to authenticate user");
-          });
-      })
-      .catch(err => {
-        console.log(err);
-        res.status(500).json({ message: "Failed to resister user" });
-      });
-  } else {
-    res.status(404).json({ message: "Missing username/password/department" });
-  }
-};
-
-const login = (req, res) => {
-  // implement user login
-  const creds = req.body;
-  if (creds.username && creds.password) {
-    helper
-      .login(creds.username)
-      .then(user => {
-        if (
-          user.password &&
-          bcrypt.compareSync(creds.password, user.password)
-        ) {
-          const token = generateToken(user);
-          res.status(201).json({ token });
-        } else {
-          res.status(500).json({ message: "Failed to authenticate" });
-        }
-      })
-      .catch(() => {
-        res.status(500).json({ message: "Failed to login" });
-      });
-  } else {
-    res.status(404).json({ message: "username/password Missing" });
-  }
-};
-
-const allUsers = (req, res) => {
+const allTrips = (req, res) => {
   helper
-    .getUsers()
-    .then(users => {
-      res.status(201).json(users);
+    .getTrips()
+    .then(trips => {
+      res.status(201).json(trips);
     })
     .catch(err => {
-      res.status(500).send({
-        error: err.message
+      res.status(500).json({
+        error: "failed to get trips"
       });
     });
 };
 
-const userById = (req, res) => {
+const TripById = (req, res) => {
   const { id } = req.params;
   helper
-    .getUsers(id)
+    .getTrips(id)
     .then(row => {
-      console.log("user by id endpoint", row);
+      console.log("trip by id endpoint", row);
       !row[0]
         ? res.json(row)
         : res.status(404).json({
-            error: "User with that ID not found"
+            error: "trip with that ID not found"
           });
     })
     .catch(err => {
       res.status(500).json({
-        error: "getting user by id failed"
+        error: "getting trip by id failed"
       });
     });
 };
 
-const editUser = (req, res) => {
+const editTrip = (req, res) => {
   const { id } = req.params;
-  const user = req.body;
-  let password = user.password;
-  console.log("no hash :", user);
-  if (password) {
-    user.password = bcrypt.hashSync(password, 12);
-    console.log("w/hash :", user);
-  }
-
+  const trip = req.body;
   helper
-    .updateUser(id, user)
+    .updateTrip(id, trip)
     .then(number => {
       res.json(number);
     })
     .catch(err => {
       res.status(500).json({
-        error: "Internal router issue with the edit of the user."
+        error: "Internal router issue with the edit of the trip."
       });
     });
 };
 
-const removeUser = (req, res) => {
+const removeTrip = (req, res) => {
   const { id } = req.params;
   helper
-    .deleteUser(id)
+    .deleteTrip(id)
     .then(number => {
       !number
         ? res.status(404).json({
-            message: "user Not Found"
+            message: "trip Not Found"
           })
         : res.json({
             message: "Its gone!"
@@ -133,9 +72,9 @@ const removeUser = (req, res) => {
     });
 };
 
-router.get("/trips", allUsers);
-router.get("/trips/:id", userById);
-router.put("/trips/:id", editUser);
-router.delete("/trips/:id", editUser);
+router.get("/trips", allTrips);
+router.get("/trips/:id", TripById);
+router.put("/trips/:id", editTrip);
+router.delete("/trips/:id", removeTrip);
 
 module.exports = router;
