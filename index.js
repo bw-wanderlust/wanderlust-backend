@@ -10,6 +10,9 @@ server.get("/", (req, res) =>
 );
 
 //routes
+const usersRoute = require("./data/routes/usersRoute");
+
+server.use("/api/users", usersRoute);
 
 //listening
 const port = 3300;

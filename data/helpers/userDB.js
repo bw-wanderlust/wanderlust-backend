@@ -10,6 +10,11 @@ module.exports = {
     }
     return db("users");
   },
+  login: username => {
+    return db("users")
+      .where("username", username)
+      .first();
+  },
   addUser: user => {
     return db("users").insert(user);
   },
