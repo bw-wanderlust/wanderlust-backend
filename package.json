@@ -4,6 +4,7 @@
   "main": "index.js",
   "repository": "https://github.com/bw-wanderlust/wanderlust-backend.git",
   "author": "<marguel.gtz@gmail.com>",
+  "description": "come on npm ",
   "license": "MIT",
   "scripts": {
     "start": "nodemon index.js"
