@@ -8,6 +8,8 @@ exports.up = function(knex) {
     table.string("password").notNullable();
     table.string("email").notNullable();
     table.boolean("isOrganizer").defaultTo(false);
+    table.string("firstName").notNullable();
+    table.string("lastName").notNullable();
   });
 };
 
