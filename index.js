@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
-
+var pg = require("pg");
 const server = express(express.json(), cors(), helmet());
 
 //test
@@ -11,10 +11,12 @@ server.get("/", (req, res) =>
 
 //routes
 const usersRoute = require("./data/routes/usersRoute");
+const tripsRoute = require("./data/routes/tripsRoute");
 
-server.use("/api/users", usersRoute);
+server.use("/api", usersRoute);
+server.use("/api", tripsRoute);
 
-//listening
+//listening`
 const port = 3300;
 
 server.listen(port, () => {

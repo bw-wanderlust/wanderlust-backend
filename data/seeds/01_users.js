@@ -1,23 +1,13 @@
-const faker = require("faker");
 
 exports.seed = function(knex) {
   // Deletes ALL existing entries
-  return knex("trips")
-    .del()
-    .then(function() {
-      let trips = [];
-      for (let i = 0; i < 10; i++) {
-        trips.push({
-          title: faker.lorem.sentence(),
-          description: faker.lorem.paragraph(),
-          organizerId: 1,
-          location: faker.address.streetAddress(),
-          cost: faker.finance.amount().toString(),
-          isFree: false,
-          startDate: faker.date.recent(),
-          endDate: faker.date.future()
-        });
-      }
-      return knex("table_name").insert(trips);
+  return knex('users').truncate()
+    .then(function () {
+      // Inserts seed entries
+      return knex('users').insert([
+        {id: 1, username: 'test', password: 'test', email: 'email@test.com'},
+        {id: 2, username: 'test2',password: 'test2', email: 'email@test.com'},
+        {id: 3, username: 'teat3',password: 'test3', email: 'email@test.com'}
+      ]);
     });
 };
