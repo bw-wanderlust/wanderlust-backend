@@ -17,7 +17,7 @@ server.use("/api", usersRoute);
 server.use("/api", tripsRoute);
 
 //listening`
-const port = 3300;
+const port = process.env.PORT || 3300;
 
 server.listen(port, () => {
   console.log(`\n=== Web API Listening on http://localhost:${port} ===\n`);
