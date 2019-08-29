@@ -24,7 +24,7 @@ const TripById = (req, res) => {
     .getTrips(id)
     .then(row => {
       console.log("trip by id endpoint", row);
-      !row[0]
+      row
         ? res.json(row)
         : res.status(404).json({
             error: "trip with that ID not found"
