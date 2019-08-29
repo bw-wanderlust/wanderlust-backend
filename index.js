@@ -2,7 +2,11 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 var pg = require("pg");
-const server = express(express.json(), cors(), helmet());
+const server = express();
+
+server.use(
+  express.json(), cors(), helmet()
+)
 
 const { sendContactEmail } = require("./utils/email");
 //test
