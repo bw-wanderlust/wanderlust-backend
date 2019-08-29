@@ -20,6 +20,7 @@
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.19.2",
     "pg": "^7.12.1",
+    "sendgrid": "^5.2.3",
     "sqlite3": "^4.1.0"
   },
   "devDependencies": {
