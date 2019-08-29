@@ -13,9 +13,9 @@ server.get("/", (req, res) =>
 // contact email
 
 server.post("/api/contact", (req, res) => {
-  const body = req.body;
+  const { firstName, lastName, email, phone, help } = req.body;
   console.log(body);
-  // sendContactEmail(email, message, from);
+  sendContactEmail(firstName, lastName, email, phone, help);
 });
 
 //routes
