@@ -7,7 +7,7 @@
   "description": "come on npm ",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
     "server": "nodemon index.js"
   },
   "dependencies": {
