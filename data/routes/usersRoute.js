@@ -8,16 +8,19 @@ const { authenticate, generateToken } = require("../middleware/authMiddleware");
 
 const register = (req, res) => {
   const creds = req.body;
+  console.log("creds", creds);
   const hash = bcrypt.hashSync(creds.password, 12);
   creds.password = hash;
   if (creds.username && creds.password && creds.firstName && creds.lastName) {
     helper
       .addUser(creds)
       .then(ids => {
+        console.log("ids", ids);
         const id = ids[0];
         helper
           .getUsers(id)
           .then(user => {
+            console.log("user", user);
             const token = generateToken(user);
             res.status(201).json({ token });
           })
