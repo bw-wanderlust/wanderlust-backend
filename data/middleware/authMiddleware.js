@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken");
 
 module.exports = {
   generateToken: user => {
+    console.log("fire");
+    console.log("auth user", user);
     const payload = {
       username: user.username
     };
@@ -13,6 +15,7 @@ module.exports = {
     console.log("token from auth", jwt.sign(payload, secret, options));
     return jwt.sign(payload, secret, options);
   },
+
   authenticate: (req, res, next) => {
     const token = req.get("Authorization");
 
