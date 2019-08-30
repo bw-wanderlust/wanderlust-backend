@@ -15,8 +15,8 @@ const register = (req, res) => {
       .addUser(creds)
       .then(ids => {
         const id = ids[0];
-        userDb
-          .getUser(id)
+        helper
+          .getUsers(id)
           .then(user => {
             const token = generateToken(user);
             res.status(201).json({ token });
