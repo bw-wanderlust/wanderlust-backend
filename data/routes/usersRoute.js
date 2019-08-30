@@ -21,8 +21,8 @@ const register = (req, res) => {
           .getUsers(id)
           .then(user => {
             console.log("user", user);
-            const token = generateToken(user);
-            res.status(201).json({ token });
+            const token = generateToken(user[0]);
+            res.status(201).json({ token: token });
           })
           .catch(err => {
             res.status(500).json("Failed to authenticate user");

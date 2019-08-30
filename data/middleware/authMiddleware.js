@@ -10,6 +10,7 @@ module.exports = {
     const options = {
       expiresIn: "30m"
     };
+    console.log("token from auth", jwt.sign(payload, secret, options));
     return jwt.sign(payload, secret, options);
   },
   authenticate: (req, res, next) => {
